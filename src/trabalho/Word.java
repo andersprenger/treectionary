@@ -6,14 +6,7 @@ package trabalho;
  * @author Anderson Sprenger, Cassiano Flores
  */
 
-public class Word {
-    private final String word;
-    private final String meaning;
-
-    public Word(String word, String meaning) {
-        this.word = word;
-        this.meaning = meaning;
-    }
+public record Word(String word, String meaning) {
 
     public String getWord() {
         return word;
