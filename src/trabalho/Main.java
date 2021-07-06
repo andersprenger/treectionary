@@ -1,8 +1,12 @@
 package trabalho;
 
+/**
+ * A primeira classe a ser executada no trabalho.
+ *
+ * @author Anderson Sprenger, Cassiano Flores
+ */
 public class Main {
-
     public static void main(String[] args) {
-	// write your code here
+        System.out.println("hello world");
     }
 }
