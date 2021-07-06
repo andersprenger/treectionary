@@ -1,29 +1,35 @@
 package trabalho;
 
 public class WordTree {
-    private CharNode root;
+    private final CharNode root;
     private int totalNodes;
     private int totalWords;
 
-    // Construtor
+    /** Construtor da classe WordTree */
     public WordTree() {
       this.root = new CharNode(null, null);
       this.totalNodes = 0;
       this.totalWords = 0;
     }
 
+    /**
+     * @return o numero total de palavas na arvore.
+     */
     public int getTotalWords() {
         return totalWords;
     }
 
+    /**
+     * @return o numero total de nodos na arvore.
+     */
     public int getTotalNodes() {
         return totalNodes;
     }
 
     /**
-     * Adiciona palavra na estrutura em árvore
+     * Adiciona palavra na estrutura em árvore.
      *
-     * @param wordString String da palavra a ser adicionada no dicionario.
+     * @param wordString palavra a ser adicionada no dicionario.
      * @param meaning significado da palavra a ser adicionada.
      */
     public void addWord(String wordString, String meaning) {
@@ -43,17 +49,21 @@ public class WordTree {
             aux = tmp;
             // rotina a ser feita caso seja a ultima letra da palavra...
             if (i == wordString.length() - 1) {
-                aux.word = word;
-                this.totalWords++;
+                if (aux.word != null) {
+                    return;
+                } else {
+                    aux.setWord(word);
+                    this.totalWords++;
+                }
             }
         }
     }
 
     /**
-     * Vai descendo na árvore até onde conseguir encontrar a palavra
+     * Vai descendo na árvore até onde conseguir encontrar a palavra.
      *
-     * @param word palavra a ser buscada
-     * @return o nodo final encontrado
+     * @param word palavra a ser buscada.
+     * @return o nodo final encontrado.
      */
     private CharNode findCharNodeForWord(String word) {
         CharNode aux = root;
@@ -80,7 +90,7 @@ public class WordTree {
      * Percorre a árvore e retorna uma lista com as palavras iniciadas pelo prefixo dado.
      * Tipicamente, um método recursivo.
      *
-     * @param prefix prefixo a ser buscado
+     * @param prefix prefixo a ser buscado.
      */
     public MyList<String> searchAll(String prefix) {
         // TODO: implement code
@@ -88,9 +98,9 @@ public class WordTree {
     }
 
     private class CharNode {
-        private Character character;
+        private final Character character;
         private Word word;
-        private CharNode parent;
+        private final CharNode parent;
         private MyList<CharNode> subTrees;
 
         public CharNode(Character character, CharNode parent) {
@@ -103,7 +113,7 @@ public class WordTree {
         /**
          * Adiciona um filho (caractere) no nodo. Não pode aceitar caracteres repetidos.
          *
-         * @param character caractere a ser adicionado
+         * @param character caractere a ser adicionado.
          */
         public CharNode addChild(char character) {
             CharNode child = new CharNode(character, this);
@@ -111,15 +121,21 @@ public class WordTree {
             return child;
         }
 
+        /**
+         * @return o numero de filhos do nodo.
+         */
         public int getNumberOfChildren() {
             return subTrees.size();
         }
 
-        public CharNode getChild(int index) {
-            if (index < 0 || index >= getNumberOfChildren()) {
-                throw new IndexOutOfBoundsException();
-            }
-
+        /**
+         * Obtém a sub arvore correspondente a posição no parametrizada.
+         *
+         * @param index da sub arvore
+         * @return o nodo na posição indicada.
+         * @throws IndexOutOfBoundsException quando index for invalido (por MyList).
+         */
+        public CharNode getChild(int index) throws IndexOutOfBoundsException {
             return subTrees.get(index);
         }
 

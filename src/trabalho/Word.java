@@ -6,9 +6,16 @@ package trabalho;
  * @author Anderson Sprenger, Cassiano Flores
  */
 
-public record Word(String word, String meaning) {
+public class Word {
+    private String word;
+    private String meaning;
 
-    // TODO: verificar se records precisam de getters...
+    public Word(String wordString, String meaning) {
+    }
+
+    public String getWord() {
+        return word;
+    }
 
     @Override
     public String toString() {
