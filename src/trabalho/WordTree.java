@@ -56,20 +56,20 @@ public class WordTree {
     private class CharNode {
         private char character;
         private Word word;
-        private CharNode father;
+        private CharNode parent;
         private MyList<CharNode> children;
 
-        public CharNode(char character, CharNode father) {
+        public CharNode(char character, CharNode parent) {
             this.character = character;
-            this.father = father;
+            this.parent = parent;
             this.word = null;
             // TODO: implement code
             // this.children = new MyList();
         }
 
-        public CharNode(char character, Word word, CharNode father) {
+        public CharNode(char character, Word word, CharNode parent) {
             this.character = character;
-            this.father = father;
+            this.parent = parent;
             this.word = word;
             // this.children = new MyList();
         }
