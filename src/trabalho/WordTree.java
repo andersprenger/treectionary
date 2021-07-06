@@ -1,25 +1,21 @@
 package trabalho;
 
 public class WordTree {
-
-    // Atributos
     private CharNode root;
-    private final int totalNodes = 0;
-    private final int totalWords = 0;
+    private int totalNodes = 0;
+    private int totalWords = 0;
 
     // Construtor
     public WordTree() {
-      // TODO: implement code
+      root = new CharNode(null, null);
     }
 
     public int getTotalWords() {
-        // TODO: implement code
-        return -1;
+        return totalWords;
     }
 
     public int getTotalNodes() {
-        // TODO: implement code
-        return -1;
+        return totalNodes;
     }
 
     /**
@@ -34,7 +30,7 @@ public class WordTree {
     /**
      * Vai descendo na árvore até onde conseguir encontrar a palavra
      *
-     * @param word
+     * @param word palavra a ser buscada
      * @return o nodo final encontrado
      */
     private CharNode findCharNodeForWord(String word) {
@@ -46,7 +42,7 @@ public class WordTree {
      * Percorre a árvore e retorna uma lista com as palavras iniciadas pelo prefixo dado.
      * Tipicamente, um método recursivo.
      *
-     * @param prefix
+     * @param prefix prefixo a ser buscado
      */
     public MyList<String> searchAll(String prefix) {
         // TODO: implement code
@@ -54,24 +50,23 @@ public class WordTree {
     }
 
     private class CharNode {
-        private char character;
+        private Character character;
         private Word word;
         private CharNode parent;
-        private MyList<CharNode> children;
+        private MyList<CharNode> subTrees;
 
-        public CharNode(char character, CharNode parent) {
+        public CharNode(Character character, CharNode parent) {
             this.character = character;
             this.parent = parent;
             this.word = null;
-            // TODO: implement code
-            // this.children = new MyList();
+            this.subTrees = new MyList();
         }
 
-        public CharNode(char character, Word word, CharNode parent) {
+        public CharNode(Character character, Word word, CharNode parent) {
             this.character = character;
             this.parent = parent;
             this.word = word;
-            // this.children = new MyList();
+            this.subTrees = new MyList();
         }
 
         /**
@@ -81,8 +76,7 @@ public class WordTree {
          */
         public CharNode addChild(char character) {
             CharNode child = new CharNode(character, this);
-            // TODO: implement code
-            // children.add();
+            subTrees.add(child);
             return child;
         }
 
@@ -94,21 +88,20 @@ public class WordTree {
          */
         public CharNode addChild(char character, Word word) {
             CharNode child = new CharNode(character, word, this);
-            // TODO: implement code
-            // children.add();
+            subTrees.add(child);
             return child;
         }
 
         public int getNumberOfChildren() {
-            // TODO: implement code
-            // return children.size();
-            return -1;
+            return subTrees.size();
         }
 
         public CharNode getChild(int index) {
-            // TODO: implement code
-            // return children.get(i);
-            return null;
+            if (index < 0 || index >= getNumberOfChildren()) {
+                throw new IndexOutOfBoundsException();
+            }
+
+            return subTrees.get(index);
         }
 
         /**
@@ -126,7 +119,14 @@ public class WordTree {
          * @param character - caractere a ser encontrado.
          */
         public CharNode findChildByChar(char character) {
-            // TODO: implement code
+            for (int i = 0; i < subTrees.size(); i++) {
+                CharNode node = subTrees.get(i);
+
+                if (node.character.equals(character)) {
+                    return node;
+                }
+            }
+
             return null;
         }
     }
