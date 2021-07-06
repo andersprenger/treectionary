@@ -8,6 +8,8 @@ package trabalho;
 
 public record Word(String word, String meaning) {
 
+    // TODO: verificar se records precisam de getters...
+
     public String getWord() {
         return word;
     }
