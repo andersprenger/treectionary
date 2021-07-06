@@ -2,12 +2,14 @@ package trabalho;
 
 public class WordTree {
     private CharNode root;
-    private int totalNodes = 0;
-    private int totalWords = 0;
+    private int totalNodes;
+    private int totalWords;
 
     // Construtor
     public WordTree() {
-      root = new CharNode(null, null);
+      this.root = new CharNode(null, null);
+      this.totalNodes = 0;
+      this.totalWords = 0;
     }
 
     public int getTotalWords() {
