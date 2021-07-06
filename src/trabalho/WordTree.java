@@ -1,5 +1,10 @@
 package trabalho;
 
+/**
+ * Implementação customizada de do TAD Arvore Genérica para o trabalho.
+ *
+ * @author Anderson Sprenger, Cassiano Flores
+ */
 public class WordTree {
     private final CharNode root;
     private int totalNodes;
@@ -97,6 +102,9 @@ public class WordTree {
         return null;
     }
 
+    /**
+     * Classe referente ao no da arvore de palavras.
+     */
     private class CharNode {
         private final Character character;
         private Word word;
