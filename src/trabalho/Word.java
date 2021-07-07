@@ -19,6 +19,10 @@ public class Word {
         return word;
     }
 
+    public String getMeaning() {
+        return meaning;
+    }
+
     @Override
     public String toString() {
         return "Palavra: " + word + "\nSignificado: " + meaning + '\n';

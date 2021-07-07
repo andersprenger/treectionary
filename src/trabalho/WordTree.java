@@ -73,18 +73,18 @@ public class WordTree {
     private CharNode findCharNodeForWord(String word) {
         CharNode aux = root;
         for (int i = 0; i < word.length(); i++) {
-            CharNode charAtIndex = aux.findChildByChar(word.charAt(i));
+            CharNode charNodeAtIndex = aux.findChildByChar(word.charAt(i));
             // se não encontrou o nodo, a arvore não tem a palavra...
-            if (charAtIndex == null) {
+            if (charNodeAtIndex == null) {
                 break;
             }
             // se encontrou o nodo, e i for length - 1, aux é o nodo da palavra...
             else if (i == word.length() - 1) {
-                return charAtIndex;
+                return charNodeAtIndex;
             }
             // caso contrario, o for continua...
             else {
-                aux = charAtIndex;
+                aux = charNodeAtIndex;
             }
         }
 
@@ -98,8 +98,17 @@ public class WordTree {
      * @param prefix prefixo a ser buscado.
      */
     public MyList<String> searchAll(String prefix) {
-        // TODO: implement code
-        return null;
+        MyList<String> list = new MyList<>();
+
+        CharNode aux = findCharNodeForWord(prefix);
+
+        if (aux == null) {
+            return list;
+        }
+
+        // TODO: percorrer todas subarvores e colocar (list.add) elas na list se tiverem palavra
+
+        return list;
     }
 
     /**
