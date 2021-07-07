@@ -1,7 +1,5 @@
 package trabalho;
 
-import java.util.function.IntFunction;
-
 /**
  * Implementação customizada de do TAD Arvore Genérica para o trabalho.
  *
@@ -40,12 +38,19 @@ public class WordTree {
      * @param meaning significado da palavra a ser adicionada.
      */
     public void addWord(String wordString, String meaning) {
+
+        wordString = wordString.toUpperCase();
+
         Word word = new Word(wordString, meaning);
 
-        // TODO: acho q funciona... tem q testar...
         CharNode aux = root;
+
         for (int i = 0; i < wordString.length(); i++) {
-            // verifica se o nodo aux possui um filho cuja letra é igual a da posição na palavra
+            // verifica se o char é mesmo uma letra
+            if (!isCompatibleChar(wordString.charAt(i))) {
+                continue; // nesse caso, ele ignora essa letra.
+            }
+            // então, ele verifica se o nodo aux possui um filho cuja letra é igual a da posição na palavra
             CharNode tmp = aux.findChildByChar(wordString.charAt(i));
             // se não possui ele cria uma e coloca como filho no nodo
             if (tmp == null) {
@@ -72,7 +77,8 @@ public class WordTree {
      * @param word palavra a ser buscada.
      * @return o nodo final encontrado.
      */
-    private CharNode findCharNodeForWord(String word) {
+    public CharNode findCharNodeForWord(String word) {
+        word = word.toUpperCase();
         CharNode aux = root;
         for (int i = 0; i < word.length(); i++) {
             CharNode charNodeAtIndex = aux.findChildByChar(word.charAt(i));
@@ -99,8 +105,11 @@ public class WordTree {
      *
      * @param prefix prefixo a ser buscado.
      */
-    public MyList<String> searchAll(String prefix) {
-        MyList<String> list = new MyList<>();
+    public MyList<Word> searchAll(String prefix) {
+
+        prefix = prefix.toUpperCase();
+
+        MyList<Word> list = new MyList<>();
 
         CharNode aux = findCharNodeForWord(prefix);
 
@@ -108,22 +117,50 @@ public class WordTree {
             return list;
         }
 
-        positionsPreAux(root,list);
+        positionsPreAux(aux, list);
 
         return list;
     }
-    
-    private void positionsPreAux(CharNode n, MyList<String> lista) { // metodo recursivo
+
+    public void printAll() {
+        MyList<Word> l = new MyList<>();
+        positionsPreAux(root, l);
+        for (int i = 0; i < l.size(); i++) {
+            System.out.println(l.get(i));
+        }
+    }
+
+    private void positionsPreAux(CharNode n, MyList<Word> lista) { // método recursivo
         if (n != null) {
-               if (n.word != null)  
-            // visita a raiz    
-               lista.add(n.word.getWord());
+            if (n.word != null) {
+                lista.add(n.word);
+            }
             // visita os filhos
-            for (int i=0; i<n.subTrees.size(); i++) {
+            for (int i = 0; i < n.subTrees.size(); i++) {
                 positionsPreAux(n.getChild(i), lista);
             }
-        } 
+        }
     }
+
+    /**
+     * Verifica se o caractere é uma letra, sendo então possível criar um CharNode com ela como character.
+     *
+     * @param c caractere que sera verificada a compatibilidade.
+     * @return true se o caractere é compatível, ou false caso contrario.
+     * @since JDK 13
+     */
+    private boolean isCompatibleChar(char c) {
+        return switch (c) {
+            case 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
+                 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
+                 'u', 'v', 'w', 'x', 'y', 'z',
+                 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
+                 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
+                 'U', 'V', 'W', 'X', 'Y', 'Z' -> true;
+            default -> false;
+        };
+    }
+
     /**
      * Classe referente ao no da arvore de palavras.
      */
@@ -134,10 +171,18 @@ public class WordTree {
         private MyList<CharNode> subTrees;
 
         public CharNode(Character character, CharNode parent) {
-            this.character = character;
-            this.parent = parent;
-            this.word = null;
-            this.subTrees = new MyList();
+            if (parent != null && !isCompatibleChar(character)) { // não é root, e não tem um char compatível...
+                throw new RuntimeException("Char invalido: " + character);
+            } else {
+                this.character = character;
+                this.parent = parent;
+                this.word = null;
+                this.subTrees = new MyList();
+            }
+
+            if (parent != null) { // se não for root...
+                parent.addChild(this);
+            }
         }
 
         /**
@@ -146,9 +191,17 @@ public class WordTree {
          * @param character caractere a ser adicionado.
          */
         public CharNode addChild(char character) {
+            if (!isCompatibleChar(character)) {
+                throw new RuntimeException("char invalido: " + character);
+            }
+
             CharNode child = new CharNode(character, this);
             subTrees.add(child);
             return child;
+        }
+
+        private void addChild(CharNode n) {
+            subTrees.add(n);
         }
 
         /**

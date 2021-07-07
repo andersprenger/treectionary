@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -19,7 +18,14 @@ public class DictionaryService {
         this.dictionary = new WordTree();
         this.load();
 
-        //System.out.println(dictionary.searchAll("ac"));
+        dictionary.printAll();
+    }
+
+    public void printWords(String str) {
+        MyList<Word> search = dictionary.searchAll(str);
+        for (int i = 0; i < search.size(); i++) {
+            System.out.println(search.get(i));
+        }
     }
 
     private void load() {
