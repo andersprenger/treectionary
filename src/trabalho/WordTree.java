@@ -32,7 +32,7 @@ public class WordTree {
     }
 
     /**
-     * Adiciona palavra na estrutura em árvore.
+     * Adiciona palavra na árvore.
      *
      * @param wordString palavra a ser adicionada no dicionario.
      * @param meaning significado da palavra a ser adicionada.
@@ -122,6 +122,9 @@ public class WordTree {
         return list;
     }
 
+    /**
+     * Percorre toda a arvore e printa todas as palavras. Usado para fins de teste.
+     */
     public void printAll() {
         MyList<Word> l = new MyList<>();
         positionsPreAux(root, l);
@@ -130,14 +133,20 @@ public class WordTree {
         }
     }
 
-    private void positionsPreAux(CharNode n, MyList<Word> lista) { // método recursivo
-        if (n != null) {
-            if (n.word != null) {
-                lista.add(n.word);
+    /**
+     * Percorre recursivamente a arvore, adicionando todas palavras encontradas.
+     *
+     * @param node o nodo a ser percorrido.
+     * @param lista onde serão adicionadas as palavras encontradas.
+     */
+    private void positionsPreAux(CharNode node, MyList<Word> lista) {
+        if (node != null) {
+            if (node.word != null) {
+                lista.add(node.word);
             }
-            // visita os filhos
-            for (int i = 0; i < n.subTrees.size(); i++) {
-                positionsPreAux(n.getChild(i), lista);
+
+            for (int i = 0; i < node.subTrees.size(); i++) {
+                positionsPreAux(node.getChild(i), lista);
             }
         }
     }
@@ -183,21 +192,6 @@ public class WordTree {
             if (parent != null) { // se não for root...
                 parent.addChild(this);
             }
-        }
-
-        /**
-         * Adiciona um filho (caractere) no nodo. Não pode aceitar caracteres repetidos.
-         *
-         * @param character caractere a ser adicionado.
-         */
-        public CharNode addChild(char character) {
-            if (!isCompatibleChar(character)) {
-                throw new RuntimeException("char invalido: " + character);
-            }
-
-            CharNode child = new CharNode(character, this);
-            subTrees.add(child);
-            return child;
         }
 
         private void addChild(CharNode n) {

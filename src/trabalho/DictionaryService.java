@@ -17,15 +17,28 @@ public class DictionaryService {
     public DictionaryService() {
         this.dictionary = new WordTree();
         this.load();
+    }
 
+    public void printAll() {
         dictionary.printAll();
     }
 
     public void printWords(String str) {
+        if (str.length() < 2) {
+            System.out.println("Favor digitar mais de 2 caracteres.");
+            return;
+        }
+
         MyList<Word> search = dictionary.searchAll(str);
         for (int i = 0; i < search.size(); i++) {
-            System.out.println(search.get(i));
+            if (i == 0) {
+                System.out.println(search.get(i));
+                System.out.println("Outros resultados:");
+            } else {
+                System.out.println(search.get(i).getWord());
+            }
         }
+        System.out.println(); // nova linha
     }
 
     private void load() {

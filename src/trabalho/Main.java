@@ -11,9 +11,24 @@ public class Main {
     public static void main(String[] args) {
         DictionaryService service = new DictionaryService();
 
-        System.out.println("Buscar no dicionario:");
-
         Scanner scn = new Scanner(System.in);
-        service.printWords(scn.next());
+
+        while (true) {
+            System.out.println("Buscar no dicionario:");
+            String in = scn.next();
+
+            if (in.equals("0")) { // fechar app
+                System.out.println("😁 app fechado.");
+                return;
+            }
+
+            else if (in.equals("-1")) { // listar todas palavras na arvore
+                service.printAll();
+            }
+
+            else { // 🧐 buscar...
+                service.printWords(in);
+            }
+        }
     }
 }
