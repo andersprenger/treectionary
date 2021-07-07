@@ -18,6 +18,8 @@ public class DictionaryService {
     public DictionaryService() {
         this.dictionary = new WordTree();
         this.load();
+
+        //System.out.println(dictionary.searchAll("ac"));
     }
 
     private void load() {
