@@ -147,7 +147,7 @@ public class WordTree {
      *
      * @param c caractere que sera verificada a compatibilidade.
      * @return true se o caractere é compatível, ou false caso contrario.
-     * @since JDK 13
+     * @requires JDK 13 (ou mais recente)
      */
     private boolean isCompatibleChar(char c) {
         return switch (c) {
@@ -168,7 +168,7 @@ public class WordTree {
         private final Character character;
         private Word word;
         private final CharNode parent;
-        private MyList<CharNode> subTrees;
+        private final MyList<CharNode> subTrees;
 
         public CharNode(Character character, CharNode parent) {
             if (parent != null && !isCompatibleChar(character)) { // não é root, e não tem um char compatível...
@@ -177,7 +177,7 @@ public class WordTree {
                 this.character = character;
                 this.parent = parent;
                 this.word = null;
-                this.subTrees = new MyList();
+                this.subTrees = new MyList<>();
             }
 
             if (parent != null) { // se não for root...
@@ -222,13 +222,8 @@ public class WordTree {
             return subTrees.get(index);
         }
 
-        public boolean setWord(Word word) {
-            if (this.word != null) {
-                return false;
-            } else {
-                this.word = word;
-                return true;
-            }
+        public void setWord(Word word) {
+            this.word = word;
         }
 
         /**
