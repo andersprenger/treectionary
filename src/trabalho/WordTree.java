@@ -1,5 +1,7 @@
 package trabalho;
 
+import java.util.function.IntFunction;
+
 /**
  * Implementação customizada de do TAD Arvore Genérica para o trabalho.
  *
@@ -106,11 +108,22 @@ public class WordTree {
             return list;
         }
 
-        // TODO: percorrer todas subarvores e colocar (list.add) elas na list se tiverem palavra
+        positionsPreAux(root,list);
 
         return list;
     }
-
+    
+    private void positionsPreAux(CharNode n, MyList<String> lista) { // metodo recursivo
+        if (n != null) {
+               if (n.word != null)  
+            // visita a raiz    
+               lista.add(n.word.getWord());
+            // visita os filhos
+            for (int i=0; i<n.subTrees.size(); i++) {
+                positionsPreAux(n.getChild(i), lista);
+            }
+        } 
+    }
     /**
      * Classe referente ao no da arvore de palavras.
      */

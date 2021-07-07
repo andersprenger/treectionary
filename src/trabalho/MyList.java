@@ -175,7 +175,7 @@ public class MyList<T> {
             aux = aux.next;
         }
 
-        bodyBuilder.delete(bodyBuilder.length() - 2, bodyBuilder.length());
+        //bodyBuilder.delete(bodyBuilder.length() - 2, bodyBuilder.length());
         bodyBuilder.append("]");
 
         return bodyBuilder.toString();
